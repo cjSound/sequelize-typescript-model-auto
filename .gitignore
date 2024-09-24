@@ -1,0 +1,8 @@
+.DS_Store
+node_modules
+_bundles
+package-lock.json
+.env.pg
+.env.mysql
+build-gen
+

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "es2017",
+    "lib": ["es5", "es6"],
+    "outDir": "lib",
+    "esModuleInterop": true /* ⭐️⭐️⭐️⭐️⭐️关键 否则部分module 通过import引入会为空 启用 emit 互操作性，以便于使用 CommonJS 和 ES 模块。 */,
+    "allowSyntheticDefaultImports": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "sourceMap": true,
+    "declaration": true,
+    "jsx": "react"
+  },
+  "node": {
+    "fs": "empty",
+    "fsevents": "empty"
+  },
+  "include": ["src/**/*"],
+  "files": ["./src/index.ts"],
+  "compileOnSave": false,
+  "buildOnSave": false
+}

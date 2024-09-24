@@ -1,10 +1,6 @@
 import { initFactory } from './util';
-import { Options } from './ferreiro-core';
-
-
-export default async (options: Options) => {
+export default async (options) => {
     const nySeqAuto = await initFactory(options);
-
     await nySeqAuto.build();
 };
-
+//# sourceMappingURL=index.js.map

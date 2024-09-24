@@ -5,7 +5,7 @@ import { MySqlDialect } from "./dialects/dialect.mysql";
 import { PostgresDialect } from "./dialects/dialect.postgres";
 import * as _ from 'lodash';
 import { readdirSync, lstatSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { join, dirname, resolve } from 'path';
 import * as Handlebars from 'handlebars';
 import camelCase from 'camelcase';
 import { getAbsolutePath } from "./util";
@@ -125,6 +125,11 @@ export class FerreiroCore {
         }
 
         this.opts = { ...arguments[0] };
+        if (!this.opts.template) {
+            // 如果没有，采用默认的templates目录
+            this.opts.template = resolve(__dirname, '../templates');
+            console.log("🚀 ~ this.opts.template:", this.opts.template)
+        }
     }
 
     get isMySql(): boolean {

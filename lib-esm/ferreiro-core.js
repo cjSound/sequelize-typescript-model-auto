@@ -1,48 +1,20 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.FerreiroCore = exports.TableInformation = exports.TableField = exports.KeyField = void 0;
-const Sequelize = __importStar(require("sequelize"));
-const dialect_sqlite_1 = require("./dialects/dialect.sqlite");
-const dialect_mysql_1 = require("./dialects/dialect.mysql");
-const dialect_postgres_1 = require("./dialects/dialect.postgres");
-const _ = __importStar(require("lodash"));
-const fs_1 = require("fs");
-const path_1 = require("path");
-const Handlebars = __importStar(require("handlebars"));
-const camelcase_1 = __importDefault(require("camelcase"));
-const util_1 = require("./util");
-class KeyField {
+import * as Sequelize from "sequelize";
+import { SqLiteDialect } from "./dialects/dialect.sqlite";
+import { MySqlDialect } from "./dialects/dialect.mysql";
+import { PostgresDialect } from "./dialects/dialect.postgres";
+import * as _ from 'lodash';
+import { readdirSync, lstatSync, readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
+import { join, dirname, resolve } from 'path';
+import * as Handlebars from 'handlebars';
+import camelCase from 'camelcase';
+import { getAbsolutePath } from "./util";
+export class KeyField {
 }
-exports.KeyField = KeyField;
-class TableField {
+export class TableField {
 }
-exports.TableField = TableField;
-class TableInformation {
+export class TableInformation {
 }
-exports.TableInformation = TableInformation;
-class FerreiroCore {
+export class FerreiroCore {
     constructor({ host, database, user, pass, port, output = undefined, dialect, tables = undefined, skipTables = undefined, camel, overwriteFile = undefined, schema = undefined, debug }, callbackConnection) {
         console.log("🚀 ~ dialect:", dialect);
         if (debug) {
@@ -61,13 +33,13 @@ class FerreiroCore {
         }
         switch (dialect) {
             case 'sqlite':
-                this.queryInterface = new dialect_sqlite_1.SqLiteDialect();
+                this.queryInterface = new SqLiteDialect();
                 break;
             case 'mysql':
-                this.queryInterface = new dialect_mysql_1.MySqlDialect();
+                this.queryInterface = new MySqlDialect();
                 break;
             case 'postgres':
-                this.queryInterface = new dialect_postgres_1.PostgresDialect();
+                this.queryInterface = new PostgresDialect();
                 break;
         }
         if (database instanceof Sequelize.Sequelize) {
@@ -86,7 +58,7 @@ class FerreiroCore {
         this.opts = Object.assign({}, arguments[0]);
         if (!this.opts.template) {
             // 如果没有，采用默认的templates目录
-            this.opts.template = path_1.resolve(__dirname, '../templates');
+            this.opts.template = resolve(__dirname, '../templates');
             console.log("🚀 ~ this.opts.template:", this.opts.template);
         }
     }
@@ -192,20 +164,20 @@ class FerreiroCore {
         this.processFiles(files, dbData);
     }
     compileTemplateDir(dirPath = this.opts.template, files = []) {
-        const stat = fs_1.lstatSync(dirPath);
+        const stat = lstatSync(dirPath);
         if (stat.isFile()) {
-            files.push(path_1.join(dirPath));
+            files.push(join(dirPath));
             return files;
         }
-        const dirLs = fs_1.readdirSync(dirPath);
+        const dirLs = readdirSync(dirPath);
         for (const dir of dirLs) {
-            const stat = fs_1.lstatSync(path_1.join(dirPath, dir));
+            const stat = lstatSync(join(dirPath, dir));
             if (stat.isDirectory()) {
-                this.compileTemplateDir(path_1.join(dirPath, dir), files);
+                this.compileTemplateDir(join(dirPath, dir), files);
             }
             else {
                 //this.processFileTemplate(join(dirPath, dir), dbData);
-                files.push(path_1.join(dirPath, dir));
+                files.push(join(dirPath, dir));
             }
         }
         return files;
@@ -238,7 +210,7 @@ class FerreiroCore {
             return Object.keys(obj);
         });
         Handlebars.registerHelper('camelcase', function (string, pascalCase = true) {
-            return camelcase_1.default(string, { pascalCase: pascalCase === true });
+            return camelCase(string, { pascalCase: pascalCase === true });
         });
         Handlebars.registerHelper('date', function (format) {
             return new Date();
@@ -341,7 +313,7 @@ class FerreiroCore {
         console.log(`Find ${hbsFiles.length} file(s) in ${this.opts.template} template.`);
         //writeFileSync('test.json', JSON.stringify(dbData));
         for (const hbsFile of hbsFiles) {
-            const str = fs_1.readFileSync(hbsFile).toString('utf-8');
+            const str = readFileSync(hbsFile).toString('utf-8');
             try {
                 const template = Handlebars.compile(str);
                 /* console.log(JSON.stringify({
@@ -360,19 +332,19 @@ class FerreiroCore {
                         continue;
                     }
                     const lines = templateStr.split('\n');
-                    const destPath = path_1.join(this.opts.outDir, util_1.getAbsolutePath(path_1.dirname(hbsFile), this.opts.template));
-                    if (!fs_1.existsSync(destPath)) {
-                        fs_1.mkdirSync(destPath, { recursive: true });
+                    const destPath = join(this.opts.outDir, getAbsolutePath(dirname(hbsFile), this.opts.template));
+                    if (!existsSync(destPath)) {
+                        mkdirSync(destPath, { recursive: true });
                     }
-                    if (lines[1].indexOf(`/`) !== -1 && !fs_1.existsSync(path_1.join(destPath, path_1.dirname(lines[1])))) {
-                        fs_1.mkdirSync(path_1.join(destPath, path_1.dirname(lines[1])), { recursive: true });
+                    if (lines[1].indexOf(`/`) !== -1 && !existsSync(join(destPath, dirname(lines[1])))) {
+                        mkdirSync(join(destPath, dirname(lines[1])), { recursive: true });
                     }
                     genCount++;
-                    if (!this.opts.overwriteFile && fs_1.existsSync(path_1.join(destPath, lines[1]))) {
-                        console.error(`Fail generate ${path_1.join(destPath, lines[1])} file already exixts (--overwriteFile is false)`);
+                    if (!this.opts.overwriteFile && existsSync(join(destPath, lines[1]))) {
+                        console.error(`Fail generate ${join(destPath, lines[1])} file already exixts (--overwriteFile is false)`);
                         continue;
                     }
-                    fs_1.writeFileSync(path_1.join(destPath, lines[1].replace(/(\r\n|\n|\r)/gm, "")), this.generateEsModules(filesImports[lines[1]]) +
+                    writeFileSync(join(destPath, lines[1].replace(/(\r\n|\n|\r)/gm, "")), this.generateEsModules(filesImports[lines[1]]) +
                         lines.reduce((prev, curr, index) => {
                             if (index > 1) {
                                 return prev + curr + '\n';
@@ -395,5 +367,4 @@ class FerreiroCore {
         process.exit(0);
     }
 }
-exports.FerreiroCore = FerreiroCore;
 //# sourceMappingURL=ferreiro-core.js.map

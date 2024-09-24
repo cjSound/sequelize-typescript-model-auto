@@ -4,5 +4,5 @@ _bundles
 package-lock.json
 .env.pg
 .env.mysql
-build-gen
+buil-gen/
 

@@ -7,4 +7,3 @@ build-gen
 lib-esm
 .env.pg
 .env.mysql
-templates

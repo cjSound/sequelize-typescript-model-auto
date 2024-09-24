@@ -1,9 +1,10 @@
 {
-  "name": "ferreiro",
-  "version": "1.0.22",
+  "name": "sequelize-typescript-model-auto",
+  "version": "1.0.0",
   "description": "Generate your codes from a postgres or mysql database",
   "main": "index.js",
   "scripts": {
+    "libBuild":"node test/build",
     "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack --watch --config webpack.config.js --progress --colors",
     "lib": "npm run clean && tsc && tsc -m es6 --outDir lib-esm",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",
@@ -13,7 +14,7 @@
     "test:pg:maptable": "mocha -r ts-node/register src/tests/show.maptable.test.ts --.env.pg",
     "test:mysql:maptable": "mocha -r ts-node/register src/tests/show.maptable.test.ts --.env.mysql",
     "test:pg:compile": "mocha -r ts-node/register src/tests/build.compile.test.ts --.env.pg",
-    "test:mysql:compile": "mocha -r ts-node/register src/tests/build.compile.test.ts --.env.mysql"
+    "test:mysql": "mocha -r ts-node/register src/tests/build.compile.test.ts --.env.mysql"
   },
   "repository": {
     "type": "git",

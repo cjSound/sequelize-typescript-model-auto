@@ -2,8 +2,9 @@
 **/tsconfig.json
 **/webpack.config.js
 node_modules
+test
+buil-gen
 src
-build-gen
 lib-esm
 .env.pg
 .env.mysql

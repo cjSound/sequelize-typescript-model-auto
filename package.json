@@ -1,8 +1,9 @@
 {
   "name": "sequelize-typescript-model-auto",
-  "version": "1.0.0",
-  "description": "Generate your codes from a postgres or mysql database",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "Generate your sequelize-typescript models codes from a postgres or mysql database",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "libBuild":"node test/build",
     "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack --watch --config webpack.config.js --progress --colors",
@@ -18,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leonetosoft/ferreiro.git"
+    "url": "git+https://github.com/cjSound/sequelize-typescript-model-auto.git"
   },
   "engines": {
     "node": ">=10.0.0"
@@ -40,19 +41,15 @@
     "code",
     "design"
   ],
-  "author": "Leonardo Neto",
+  "author": "cjSound",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/leonetosoft/ferreiro/issues"
-  },
-  "bin": {
-    "@leonetosoft/create-project": "bin/ferreiro",
-    "ferreiro": "bin/ferreiro"
+    "url": "https://github.com/cjSound/sequelize-typescript-model-auto/issues"
   },
   "publishConfig": {
     "access": "public"
   },
-  "homepage": "https://github.com/leonetosoft/ferreiro#readme",
+  "homepage": "https://github.com/cjSound/sequelize-typescript-model-auto#readme",
   "dependencies": {
     "camelcase": "5.3.1",
     "commander": "^4.1.1",

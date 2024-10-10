@@ -12,6 +12,8 @@ export class KeyField {
 }
 export class TableField {
 }
+export class TableOneToManyField {
+}
 export class TableInformation {
 }
 export class FerreiroCore {
@@ -154,7 +156,7 @@ export class FerreiroCore {
                 }
             }
         }
-        console.log("🚀 ~ mapTable ~ tableInfos:", JSON.stringify(tableInfos));
+        // console.log("🚀 ~ mapTable ~ tableInfos:", JSON.stringify(tableInfos))
         return tableInfos;
     }
     async build() {

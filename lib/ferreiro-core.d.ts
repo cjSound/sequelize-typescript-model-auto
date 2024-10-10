@@ -48,10 +48,15 @@ export declare class TableField {
     uniqueKey: KeyField;
     serialKey: KeyField;
 }
+export declare class TableOneToManyField {
+    name: string;
+    modalName: string;
+}
 export declare class TableInformation {
     tablename: string;
     fields: TableField[];
     foreignKeys: KeyField[];
+    oneToMany?: TableOneToManyField[];
 }
 export declare class FerreiroCore {
     db: Sequelize.Sequelize;

@@ -17,6 +17,7 @@ export interface Options {
     debug: boolean;
     template: string;
     outDir: string;
+    customDataFn?: (data: TableInformation[]) => TableInformation[];
 }
 export declare class KeyField {
     constraint_name: string;

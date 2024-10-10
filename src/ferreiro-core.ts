@@ -61,10 +61,16 @@ export class TableField {
     serialKey: KeyField;
 }
 
+export class TableOneToManyField {
+    name: string;
+    modalName: string;
+}
+
 export class TableInformation {
     tablename: string;
-    fields: TableField[]
-    foreignKeys: KeyField[]
+    fields: TableField[];
+    foreignKeys: KeyField[];
+    oneToMany?: TableOneToManyField[];
 }
 export class FerreiroCore {
     db: Sequelize.Sequelize;
@@ -244,7 +250,7 @@ export class FerreiroCore {
 
             }
         }
-        console.log("🚀 ~ mapTable ~ tableInfos:", JSON.stringify(tableInfos))
+        // console.log("🚀 ~ mapTable ~ tableInfos:", JSON.stringify(tableInfos))
         return tableInfos;
     }
 

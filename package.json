@@ -1,11 +1,11 @@
 {
   "name": "sequelize-typescript-model-auto",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Generate your sequelize-typescript models codes from a postgres or mysql database",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "libBuild":"node test/build",
+    "libBuild": "node test/build",
     "build": "npm run clean && tsc && tsc -m es6 --outDir lib-esm && webpack --watch --config webpack.config.js --progress --colors",
     "lib": "npm run clean && tsc && tsc -m es6 --outDir lib-esm",
     "test": "mocha -r ts-node/register tests/**/*.test.ts",

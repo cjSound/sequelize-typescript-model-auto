@@ -1,6 +1,6 @@
 {
   "name": "sequelize-typescript-model-auto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Generate your sequelize-typescript models codes from a postgres or mysql database",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

@@ -10,7 +10,8 @@
             "Default",
             "Comment",
             "ForeignKey",
-            "BelongsTo"
+            "BelongsTo",
+            "HasMany"
         ],
         "type-graphql": [
             "ObjectType",

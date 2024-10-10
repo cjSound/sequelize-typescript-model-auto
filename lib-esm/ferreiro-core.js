@@ -145,7 +145,8 @@ export class FerreiroCore {
                     tableInfos.push({
                         tablename: table,
                         fields: [fieldItem],
-                        foreignKeys: foreignKey ? [foreignKey] : []
+                        foreignKeys: foreignKey ? [foreignKey] : [],
+                        oneToMany: []
                     });
                 }
                 else {

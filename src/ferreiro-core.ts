@@ -70,7 +70,7 @@ export class TableInformation {
     tablename: string;
     fields: TableField[];
     foreignKeys: KeyField[];
-    oneToMany?: TableOneToManyField[];
+    oneToMany: TableOneToManyField[];
 }
 export class FerreiroCore {
     db: Sequelize.Sequelize;
@@ -238,7 +238,8 @@ export class FerreiroCore {
                     tableInfos.push({
                         tablename: table,
                         fields: [fieldItem],
-                        foreignKeys: foreignKey ? [foreignKey] : []
+                        foreignKeys: foreignKey ? [foreignKey] : [],
+                        oneToMany: []
                     });
                 } else {
                     findTab.fields.push(fieldItem);

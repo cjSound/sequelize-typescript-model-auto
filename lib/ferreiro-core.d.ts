@@ -56,7 +56,7 @@ export declare class TableInformation {
     tablename: string;
     fields: TableField[];
     foreignKeys: KeyField[];
-    oneToMany?: TableOneToManyField[];
+    oneToMany: TableOneToManyField[];
 }
 export declare class FerreiroCore {
     db: Sequelize.Sequelize;

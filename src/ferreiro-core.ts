@@ -27,6 +27,7 @@ export interface Options {
     debug: boolean;
     template: string;
     outDir: string;
+    customDataFn?: (data: TableInformation[]) => TableInformation[];
 }
 
 export class KeyField {
@@ -249,9 +250,11 @@ export class FerreiroCore {
 
     async build() {
         const dbData = await this.mapTable();
+        const { customDataFn } = this.opts
         //writeFileSync('tableinf.json', JSON.stringify(dbData, null, 2));
         const files = this.compileTemplateDir();
-        this.processFiles(files, dbData);
+
+        this.processFiles(files, customDataFn ? customDataFn(dbData) : dbData);
     }
 
     compileTemplateDir(dirPath = this.opts.template, files: string[] = []) {
